@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Evento;
+use Illuminate\Console\Scheduling\Event;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +16,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
+    $evento  = Evento::all()->first();
+   
+    return view('home', ['evento' => $evento]);
 });
 
 Route::middleware([
@@ -22,7 +27,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
+    Route::get('/painel', function () {
+        return view('painel');
     })->name('dashboard');
 });
